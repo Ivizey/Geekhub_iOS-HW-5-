@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         changesEdit.addTarget(self, action: #selector(changeText), for: .editingChanged)
         rectView = createView()
         slider = createSlider()
-        slider.addTarget(self, action: #selector(changeAlpha), for: .valueChanged)
+        slider.addTarget(self, action: #selector(changeAlphaAndCornerRadius), for: .valueChanged)
         createRandomColorButton()
     }
     
@@ -90,8 +90,9 @@ class ViewController: UIViewController {
         return view
     }
     
-    @objc func changeAlpha(sender: UISlider) {
+    @objc func changeAlphaAndCornerRadius(sender: UISlider) {
         rectView.alpha = CGFloat(sender.value/100)
+        rectView.layer.cornerRadius = CGFloat(sender.value)
         let color = CGFloat(sender.value * 2)
         sender.maximumTrackTintColor = UIColor(hue: color,
                                                saturation: 1,
@@ -106,6 +107,8 @@ class ViewController: UIViewController {
                                             width: 150,
                                             height: 20))
         button.setTitle("Change color", for: .normal)
+        button.setTitleColor(.random, for: .normal)
+        button.backgroundColor = .random
         button.addTarget(self, action: #selector(setTitleColorButton), for: .touchDown)
         button.addTarget(self, action: #selector(setRandomBackgroundButton), for: .touchDragOutside)
         view.addSubview(button)
